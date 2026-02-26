@@ -1,0 +1,274 @@
+:root {
+  /* 覆盖原有变量，匹配新设计风格 */
+  --bg-primary: #050505 !important;
+  --bg-secondary: #111111 !important;
+  --bg-tertiary: #161616 !important;
+  --bg-hover: #222222 !important;
+  --bg-active: #333333 !important;
+  
+  --border-color: #333333 !important;
+  --border-hover: #555555 !important;
+  
+  --text-primary: #ffffff !important;
+  --text-secondary: #888888 !important;
+  --text-muted: #555555 !important;
+  
+  /* 品牌色 - 替换原本的紫色 */
+  --accent-primary: #FFE23A !important;
+  --accent-secondary: #FFF080 !important;
+  --accent-gradient: linear-gradient(135deg, #FFE23A 0%, #FFD700 100%) !important;
+  
+  --shadow-sm: 4px 4px 0 rgba(0, 0, 0, 0.5) !important;
+  --shadow-md: 6px 6px 0 rgba(0, 0, 0, 0.5) !important;
+  --shadow-lg: 8px 8px 0 rgba(0, 0, 0, 0.5) !important;
+
+  --font-family-base: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+body {
+  font-family: var(--font-family-base) !important;
+  background-color: var(--bg-primary) !important;
+}
+
+/* 背景网格动画 */
+.bg-grid-layer {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  perspective: 500px;
+  transform-style: preserve-3d;
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 40px; }
+}
+
+/* 确保主应用层级在背景之上 */
+#root {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+}
+
+/* LOGO 光效增强 - 多彩流光边框 */
+.logo-icon {
+  position: relative;
+  background: transparent !important;
+  padding: 1.5px !important; /* 边框变得更细 */
+  border: none !important;
+  border-radius: 12px !important; /* 整个 Logo 和边框的大圆角 */
+  overflow: hidden !important;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5) !important;
+  z-index: 0;
+}
+
+/* 旋转的多彩背景层 - 增加模糊 */
+.logo-icon::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%; 
+  width: 200%; height: 200%;
+  background: conic-gradient(
+    #ff0000, #ff8800, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000
+  );
+  animation: rotateBorder 4s linear infinite;
+  z-index: -1;
+  filter: blur(2px); /* 让光效边缘模糊柔和 */
+}
+
+/* 内部遮罩层 */
+.logo-icon img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  background: #111; /* 遮挡中间 */
+  position: relative;
+  z-index: 1;
+  border-radius: 10.5px !important; /* 12px - 1.5px padding = 10.5px */
+}
+
+@keyframes rotateBorder {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 强制去圆角，硬朗风格 */
+.studio-container, .control-panel, .panel-header, 
+.dropdown-trigger, .shuffle-btn, .dropdown-menu,
+.action-btn, .text-input, .btn, .btn-primary, .btn-secondary,
+.color-picker-input, .select, input[type="text"], button {
+  border-radius: 0 !important;
+}
+
+/* 解决直角/圆角冲突：颜色选择器 */
+.color-picker-input {
+  overflow: visible !important; /* 允许超出 */
+  border-radius: 0 !important;
+}
+.color-picker-input::-webkit-color-swatch-wrapper {
+  padding: 0 !important;
+}
+.color-picker-input::-webkit-color-swatch {
+  border: none !important;
+  border-radius: 0 !important; /* 内部也强制直角 */
+}
+
+/* 按钮样式重置 */
+.btn-primary {
+  background: var(--accent-primary) !important;
+  color: #000 !important;
+  border: 1px solid var(--accent-primary) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  box-shadow: none !important;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+.btn-primary:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 4px 4px 0 #fff !important;
+  color: #000 !important;
+}
+
+.btn-secondary {
+  background: transparent !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-primary) !important;
+  background: var(--bg-hover) !important;
+}
+
+/* 侧边栏样式优化 */
+.control-panel {
+  background: var(--bg-secondary) !important;
+  border-right: 1px solid var(--border-color) !important;
+}
+
+.panel-header {
+  background: var(--bg-secondary) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.logo-text {
+  font-family: monospace !important;
+  letter-spacing: -0.5px !important;
+}
+
+/* 输入控件优化 */
+.dropdown-trigger, .text-input, select {
+  background: var(--bg-tertiary) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.dropdown-trigger:hover, .text-input:focus, select:focus {
+  border-color: var(--accent-primary) !important;
+}
+
+/* 滑块进度条优化 */
+input[type=range] {
+  background: var(--bg-hover) !important; /* 轨道颜色变浅，增加可见度 */
+  height: 4px !important;
+  border-radius: 2px !important;
+}
+
+input[type=range]::-webkit-slider-track {
+  background: var(--bg-hover) !important;
+  border-radius: 2px !important;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  background: var(--accent-primary) !important; /* 滑块改为品牌黄 */
+  border: 2px solid #000 !important; /* 增加黑色描边提升对比 */
+  border-radius: 50% !important; /* 改为圆形 */
+  width: 12px !important; /* 改小一点 */
+  height: 12px !important;
+  box-shadow: 0 0 0 1px var(--accent-primary) !important; /* 外发光效果 */
+  cursor: pointer !important;
+  margin-top: -4px !important; /* 垂直居中对齐轨道 */
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.2) !important;
+  background: #fff !important;
+  box-shadow: 0 0 0 2px var(--accent-primary) !important;
+}
+
+/* 下载按钮组样式统一 */
+/* 目标：让 .export-pill-btn 和 .btn-secondary/.btn-primary 风格一致 */
+
+/* 针对右下角的导出按钮组 */
+.export-pill-btn {
+  border-radius: 0 !important; /* 去圆角 */
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid var(--border-color) !important;
+  color: #fff !important;
+  padding: 8px 16px !important; /* 调整 padding 统一高度 */
+  height: 36px !important; /* 强制统一高度 */
+}
+
+/* 针对下载视频的主按钮 */
+.export-pill-btn.primary {
+  background: var(--accent-primary) !important;
+  color: #000 !important; /* 黑色文字 */
+  border-color: var(--accent-primary) !important;
+  font-weight: 600 !important;
+}
+
+.export-pill-btn:hover {
+  background: #333 !important;
+  border-color: #fff !important;
+}
+
+.export-pill-btn.primary:hover {
+  background: #FFD700 !important;
+  color: #000 !important;
+  box-shadow: 0 0 10px rgba(255, 226, 58, 0.4) !important;
+}
+
+/* 统一 duration 下拉框的高度 */
+.duration-dropdown-trigger {
+  border-radius: 0 !important;
+  height: 36px !important;
+  background: rgba(0, 0, 0, 0.8) !important;
+  border: 1px solid var(--border-color) !important;
+  padding: 0 12px !important;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary) !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color) !important;
+  border-radius: 0 !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted) !important;
+}
+
+/* 选中高亮色 */
+::selection {
+  background: var(--accent-primary) !important;
+  color: #000 !important;
+}

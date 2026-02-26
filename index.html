@@ -13,8 +13,30 @@
   <link rel="modulepreload" crossorigin href="./assets/animation-BuvATFQ7.js">
   <link rel="modulepreload" crossorigin href="./assets/three-Je9VoXOv.js">
   <link rel="stylesheet" crossorigin href="./assets/index-BBWwREp2.css">
+  <!-- 引入自定义酷炫风格 -->
+  <link rel="stylesheet" href="./dynamic-visual-style.css">
 </head>
 <body>
+  <!-- 背景网格层 -->
+  <div class="bg-grid-layer"></div>
   <div id="root"></div>
+  
+  <!-- 运行时文案替换脚本 -->
+  <script>
+    (function() {
+      // 目标文案配置
+      const NEW_SUBTITLE = "参数化生成惊艳视效，开源模组自由调节";
+      
+      const observer = new MutationObserver(() => {
+        // 替换副标题
+        const subtitle = document.querySelector('.panel-subtitle');
+        if (subtitle && subtitle.textContent.trim() !== NEW_SUBTITLE) {
+          subtitle.textContent = NEW_SUBTITLE;
+        }
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+    })();
+  </script>
 </body>
 </html>
